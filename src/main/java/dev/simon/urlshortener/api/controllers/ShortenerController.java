@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.net.MalformedURLException;
 
 @RestController
+@RequestMapping("/url-shortener")
 public class ShortenerController {
 
     private final ShortenerService shortenerService;
@@ -32,7 +33,7 @@ public class ShortenerController {
     @GetMapping("/search")
     public GetURLResponse searchUrl(@RequestParam("url") String url) {
         String fullUrl = shortenerService.searchFullUrl(url)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown URL " + url));
         return new GetURLResponse(fullUrl);
     }
 

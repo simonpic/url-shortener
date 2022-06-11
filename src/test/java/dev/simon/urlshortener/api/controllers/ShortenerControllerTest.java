@@ -31,7 +31,7 @@ public class ShortenerControllerTest {
         String fullUrl = "https://www.lemonde.fr/international/";
         when(shortenerService.createShortUrl(fullUrl)).thenThrow(new MalformedURLException());
 
-        mvc.perform(post("/shortens")
+        mvc.perform(post("/url-shortener/shortens")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"url\": \"https://www.lemonde.fr/international/\"}"))
                 .andExpect(status().isBadRequest());
@@ -43,7 +43,7 @@ public class ShortenerControllerTest {
         when(shortenerService.createShortUrl(fullUrl))
                 .thenReturn("https://www.lemonde.fr/9b264132fc");
 
-        mvc.perform(post("/shortens")
+        mvc.perform(post("/url-shortener/shortens")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"url\": \"https://www.lemonde.fr/international/\"}"))
                 .andExpect(status().isOk())
@@ -56,7 +56,7 @@ public class ShortenerControllerTest {
         String url = "https://www.lemonde.fr/9b264132fc";
         when(shortenerService.searchFullUrl(url)).thenReturn(Optional.empty());
 
-        mvc.perform(get("/search").param("url", url))
+        mvc.perform(get("/url-shortener/search").param("url", url))
                 .andExpect(status().isNotFound());
     }
 
@@ -66,7 +66,7 @@ public class ShortenerControllerTest {
         when(shortenerService.searchFullUrl(url))
                 .thenReturn(Optional.of("https://www.lemonde.fr/international/"));
 
-        mvc.perform(get("/search").param("url", url))
+        mvc.perform(get("/url-shortener/search").param("url", url))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.fullUrl", is("https://www.lemonde.fr/international/")));
     }
