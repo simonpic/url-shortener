@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: "URL Shortener"
+
+paths:
+  /url-shortener/search:
+    description: Search an full URL
+    get:
+      summary: Gets a full URL by the shortened URL
+      parameters:
+        - name: url
+          in: query
+          schema:
+            type: string
+      responses:
+        200:
+          description: Returns the full url corresponding to the short url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetURLResponse'
+        404:
+          description: The url in not known
+  /url-shortener/shortens:
+    description: Creates a shortened URL
+    post:
+      summary: Shortens a given URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostURLRequest'
+      responses:
+        200:
+          description: Returns the shortened URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostURLResponse'
+        400:
+          description: The url is malformed
+
+components:
+  schemas:
+    GetURLResponse:
+      type: object
+      properties:
+        fullUrl:
+          type: string
+      required:
+        - fullUrl
+    PostURLRequest:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+        - url
+    PostURLResponse:
+      type: object
+      properties:
+        shortenedUrl:
+          type: string
+      required:
+        - shortenedUrl

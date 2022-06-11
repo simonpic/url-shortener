@@ -9,14 +9,14 @@ public class ShortenedUrl {
     @Id
     private String shortUrl;
 
-    private String plainUrl;
+    private String fullUrl;
 
     public ShortenedUrl() {
     }
 
-    public ShortenedUrl(String shortUrl, String plainUrl) {
+    public ShortenedUrl(String shortUrl, String fullUrl) {
         this.shortUrl = shortUrl;
-        this.plainUrl = plainUrl;
+        this.fullUrl = fullUrl;
     }
 
     public String getShortUrl() {
@@ -27,11 +27,11 @@ public class ShortenedUrl {
         this.shortUrl = shortUrl;
     }
 
-    public String getPlainUrl() {
-        return plainUrl;
+    public String getFullUrl() {
+        return fullUrl;
     }
 
-    public void setPlainUrl(String plainUrl) {
-        this.plainUrl = plainUrl;
+    public void setFullUrl(String fullUrl) {
+        this.fullUrl = fullUrl;
     }
 }

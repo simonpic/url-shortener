@@ -20,16 +20,16 @@ public class ShortenerServiceImpl implements ShortenerService {
     }
 
     @Override
-    public String createShortUrl(String plainUrl) throws MalformedURLException {
-        URL url = new URL(plainUrl);
+    public String createShortUrl(String fullUrl) throws MalformedURLException {
+        URL url = new URL(fullUrl);
         String shortUrl = urlShortener.shortensUrl(url);
-        ShortenedUrl shortenedUrl = new ShortenedUrl(shortUrl, plainUrl);
+        ShortenedUrl shortenedUrl = new ShortenedUrl(shortUrl, fullUrl);
         shortenedRepository.save(shortenedUrl);
         return shortUrl;
     }
 
     @Override
-    public Optional<String> searchPlainUrl(String shortUrl) {
-        return shortenedRepository.findByShortUrl(shortUrl).map(ShortenedUrl::getPlainUrl);
+    public Optional<String> searchFullUrl(String shortUrl) {
+        return shortenedRepository.findByShortUrl(shortUrl).map(ShortenedUrl::getFullUrl);
     }
 }

@@ -1,4 +1,4 @@
-all: create_buildpack start_app
+build_and_start: create_buildpack start_app
 
 create_buildpack:
 	./mvnw spring-boot:build-image

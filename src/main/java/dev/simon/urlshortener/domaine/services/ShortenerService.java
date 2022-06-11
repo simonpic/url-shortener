@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface ShortenerService {
 
-    String createShortUrl(String plainUrl) throws MalformedURLException;
+    String createShortUrl(String fullUrl) throws MalformedURLException;
 
-    Optional<String> searchPlainUrl(String shortUrl);
+    Optional<String> searchFullUrl(String shortUrl);
 }

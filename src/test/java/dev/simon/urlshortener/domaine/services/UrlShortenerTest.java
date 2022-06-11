@@ -1,6 +1,5 @@
 package dev.simon.urlshortener.domaine.services;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.DigestUtils;
@@ -23,23 +22,23 @@ public class UrlShortenerTest {
 
     @Test
     public void shortensUrl_returnsShortUrl_sansPort() throws MalformedURLException {
-        String plainUrl = "https://www.lemonde.fr/international/";
-        URL url = new URL(plainUrl);
+        String fullUrl = "https://www.lemonde.fr/international/";
+        URL url = new URL(fullUrl);
 
         String shortenedUrl = urlShortener.shortensUrl(url);
 
-        String expectedHash = computeHash(plainUrl);
+        String expectedHash = computeHash(fullUrl);
         assertThat(shortenedUrl).isEqualTo("https://www.lemonde.fr/" + expectedHash);
     }
 
     @Test
     public void shortensUrl_returnsShortUrl_withPort() throws MalformedURLException {
-        String plainUrl = "https://www.lemonde.fr:4567/international/";
-        URL url = new URL(plainUrl);
+        String fullUrl = "https://www.lemonde.fr:4567/international/";
+        URL url = new URL(fullUrl);
 
         String shortenedUrl = urlShortener.shortensUrl(url);
 
-        String expectedHash = computeHash(plainUrl);
+        String expectedHash = computeHash(fullUrl);
         assertThat(shortenedUrl).isEqualTo("https://www.lemonde.fr:4567/" + expectedHash);
     }
 

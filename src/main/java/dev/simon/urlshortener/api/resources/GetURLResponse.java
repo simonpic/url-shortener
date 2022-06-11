@@ -1,13 +1,13 @@
 package dev.simon.urlshortener.api.resources;
 
 public class GetURLResponse {
-    private String plainUrl;
+    private String fullUrl;
 
-    public GetURLResponse(String plainUrl) {
-        this.plainUrl = plainUrl;
+    public GetURLResponse(String fullUrl) {
+        this.fullUrl = fullUrl;
     }
 
-    public String getPlainUrl() {
-        return plainUrl;
+    public String getFullUrl() {
+        return fullUrl;
     }
 }

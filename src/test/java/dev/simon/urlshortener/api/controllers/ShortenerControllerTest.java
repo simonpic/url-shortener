@@ -28,8 +28,8 @@ public class ShortenerControllerTest {
 
     @Test
     public void shortensUrl_responds400WhenMalformedUrl() throws Exception {
-        String plainUrl = "https://www.lemonde.fr/international/";
-        when(shortenerService.createShortUrl(plainUrl)).thenThrow(new MalformedURLException());
+        String fullUrl = "https://www.lemonde.fr/international/";
+        when(shortenerService.createShortUrl(fullUrl)).thenThrow(new MalformedURLException());
 
         mvc.perform(post("/shortens")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -39,8 +39,8 @@ public class ShortenerControllerTest {
 
     @Test
     public void shortensUrl_Responds200WithShortenedUrl() throws Exception {
-        String plainUrl = "https://www.lemonde.fr/international/";
-        when(shortenerService.createShortUrl(plainUrl))
+        String fullUrl = "https://www.lemonde.fr/international/";
+        when(shortenerService.createShortUrl(fullUrl))
                 .thenReturn("https://www.lemonde.fr/9b264132fc");
 
         mvc.perform(post("/shortens")
@@ -54,21 +54,21 @@ public class ShortenerControllerTest {
     @Test
     public void searchUrl_responds404_whenUnknownUrl() throws Exception {
         String url = "https://www.lemonde.fr/9b264132fc";
-        when(shortenerService.searchPlainUrl(url)).thenReturn(Optional.empty());
+        when(shortenerService.searchFullUrl(url)).thenReturn(Optional.empty());
 
         mvc.perform(get("/search").param("url", url))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void searchUrl_responds200WithPlainUrl() throws Exception {
+    public void searchUrl_responds200WithFullUrl() throws Exception {
         String url = "https://www.lemonde.fr/9b264132fc";
-        when(shortenerService.searchPlainUrl(url))
+        when(shortenerService.searchFullUrl(url))
                 .thenReturn(Optional.of("https://www.lemonde.fr/international/"));
 
         mvc.perform(get("/search").param("url", url))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.plainUrl", is("https://www.lemonde.fr/international/")));
+                .andExpect(jsonPath("$.fullUrl", is("https://www.lemonde.fr/international/")));
     }
 
 }

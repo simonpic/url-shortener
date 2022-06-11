@@ -31,9 +31,9 @@ public class ShortenerController {
 
     @GetMapping("/search")
     public GetURLResponse searchUrl(@RequestParam("url") String url) {
-        String plainURL = shortenerService.searchPlainUrl(url)
+        String fullUrl = shortenerService.searchFullUrl(url)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return new GetURLResponse(plainURL);
+        return new GetURLResponse(fullUrl);
     }
 
 }
