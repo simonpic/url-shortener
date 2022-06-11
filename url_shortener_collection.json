@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "ac2e76b3-dab9-4a5c-b5f5-9d50c2a812c9",
+		"name": "URL Shortener",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "dev",
+			"item": [
+				{
+					"name": "Get full URL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/url-shortener/search?url=https://www.lemonde.fr/c60d362bbc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"url-shortener",
+								"search"
+							],
+							"query": [
+								{
+									"key": "url",
+									"value": "https://www.lemonde.fr/c60d362bbc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Shorten URL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://www.lemonde.fr/international/\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/url-shortener/shortens",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"url-shortener",
+								"shortens"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "prod",
+			"item": [
+				{
+					"name": "Get full URL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9999/url-shortener/search?url=https://www.lemonde.fr/c60d362bbc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"url-shortener",
+								"search"
+							],
+							"query": [
+								{
+									"key": "url",
+									"value": "https://www.lemonde.fr/c60d362bbc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Shorten URL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://www.lemonde.fr/international/\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9999/url-shortener/shortens",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"url-shortener",
+								"shortens"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

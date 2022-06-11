@@ -2,7 +2,7 @@
 
 The URL Shortener service is a Springboot web service that shorts any given URL. The service
 hash the URL, keeps the 10 first characters and concatenate them with the original URL's domain.
-The created URLs are persisted in a Mongodb collection.
+The created URLs are persisted in a MongoDB collection.
 
 The service exposes two endpoints:
  - POST /url-shortener/shortens' to short an URL
@@ -31,19 +31,19 @@ $ ./mvnw verify
 Integration tests require Docker as they use testcontainers
 
 ### Run the service
-To use the application you'll need a Mongodb instance, if you don't have one running
+To use the application you'll need a MongoDB instance, if you don't have one running
 on your computer you can launch one with the following command (Docker needed):
 ```shell
 $ docker-compose -f docker/stack-dev.yml up
 ```
-This will start a containerized Mongodb instance, this instance is meant to be used for the development.
+This will start a containerized MongoDB instance, this instance is meant to be used for the development.
 No volume is mount so data won't persist after the container is stopped.
 
 - To start the URL Shortener service
 ```shell
 $ ./mvnw spring-boot:run
 ```
-- To stop the Mongodb container
+- To stop the MongoDB container
 ```shell
 $ ./mvnw docker-compose -f stack-dev.yml down
 ```
@@ -54,20 +54,37 @@ $ ./mvnw docker-compose -f stack-dev.yml down
 
 **!! Docker required !!**
 
-- First launch
+
+### Create the buildpack and launch the application
 
 ```shell
 $ make build_and_start
 ```
-This will create a buildpack of the springboot application, then launch a docker-compose
-stack composed by the URL Shortener service and a Mongodb instance.
+Or
+```shell
+$ ./mvnw spring-boot:build-image
+$ docker-compose -f docker/stack.yml up
+```
 
- - To start the application without rebuilding the service image:
+This will create a buildpack of the springboot application, then launch a docker-compose
+stack composed by the URL Shortener service and a MongoDB instance.
+
+### Start the application without rebuilding the service image
+
 ```shell
 $ make start_app
 ```
+Or
+```shell
+$ docker-compose -f docker/stack.yml up
+```
 
-- To stop the app
+### Stop the application
+
 ```shell
 $ make stop_app
+```
+Or
+```shell
+$ docker-compose -f docker/stack.yml down
 ```
