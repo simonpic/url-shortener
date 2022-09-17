@@ -18,7 +18,6 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -67,12 +66,11 @@ public class ShortensUrlITCase {
 
         PostURLResponse postURLResponse = objectMapper.readValue(postResponseBody, PostURLResponse.class);
 
-        String getReponseBody = mvc.perform(get("/url-shortener/search").param("url", postURLResponse.getShortenedUrl()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fullUrl", is(fullUrl)))
-                .andReturn().getResponse().getContentAsString();
+        LOGGER.info("Hashed URL {}", postURLResponse.getShortenedUrl());
 
-        LOGGER.info("\tFull URL successfully retrieved\n{}", getReponseBody);
+        mvc.perform(get(postURLResponse.getShortenedUrl()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "https://www.lemonde.fr/international/"));
     }
 
 }
