@@ -7,31 +7,31 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ShortenedUrl {
 
     @Id
-    private String shortUrl;
+    private String hash;
 
-    private String fullUrl;
+    private String originalUrl;
 
     public ShortenedUrl() {
     }
 
-    public ShortenedUrl(String shortUrl, String fullUrl) {
-        this.shortUrl = shortUrl;
-        this.fullUrl = fullUrl;
+    public ShortenedUrl(String hash, String originalUrl) {
+        this.hash = hash;
+        this.originalUrl = originalUrl;
     }
 
-    public String getShortUrl() {
-        return shortUrl;
+    public String getHash() {
+        return hash;
     }
 
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
-    public String getFullUrl() {
-        return fullUrl;
+    public String getOriginalUrl() {
+        return originalUrl;
     }
 
-    public void setFullUrl(String fullUrl) {
-        this.fullUrl = fullUrl;
+    public void setOriginalUrl(String originalUrl) {
+        this.originalUrl = originalUrl;
     }
 }

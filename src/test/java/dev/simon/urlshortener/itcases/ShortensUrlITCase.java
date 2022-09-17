@@ -3,6 +3,7 @@ package dev.simon.urlshortener.itcases;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.simon.urlshortener.api.resources.PostURLResponse;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Testcontainers
 @DisplayName("Case: create shortened URL")
+@Tag("integration-test")
 public class ShortensUrlITCase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ShortensUrlITCase.class);

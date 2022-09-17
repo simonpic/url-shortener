@@ -60,15 +60,4 @@ public class ShortenerControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    public void searchUrl_responds200WithFullUrl() throws Exception {
-        String url = "https://www.lemonde.fr/9b264132fc";
-        when(shortenerService.searchFullUrl(url))
-                .thenReturn(Optional.of("https://www.lemonde.fr/international/"));
-
-        mvc.perform(get("/url-shortener/search").param("url", url))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fullUrl", is("https://www.lemonde.fr/international/")));
-    }
-
 }

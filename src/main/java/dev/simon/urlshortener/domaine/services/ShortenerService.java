@@ -7,5 +7,5 @@ public interface ShortenerService {
 
     String createShortUrl(String fullUrl) throws MalformedURLException;
 
-    Optional<String> searchFullUrl(String shortUrl);
+    Optional<String> searchFullUrl(String hash);
 }

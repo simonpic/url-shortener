@@ -1,7 +1,6 @@
 # URL Shortener
 
-The URL Shortener service is a Springboot web service that shorts any given URL. The service
-hash the URL, keeps the 10 first characters and concatenate them with the original URL's domain.
+The URL Shortener service is a Springboot web service that shorts any given URL.
 The created URLs are persisted in a MongoDB collection.
 
 The service exposes two endpoints:

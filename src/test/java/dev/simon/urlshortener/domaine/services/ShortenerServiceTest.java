@@ -2,10 +2,10 @@ package dev.simon.urlshortener.domaine.services;
 
 import dev.simon.urlshortener.domaine.entities.ShortenedUrl;
 import dev.simon.urlshortener.domaine.repositories.ShortenedRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -21,13 +21,18 @@ import static org.mockito.Mockito.*;
 public class ShortenerServiceTest {
 
     @Mock
-    private UrlShortener urlShortener;
+    private UrlHasher urlHasher;
 
     @Mock
     private ShortenedRepository shortenedRepository;
 
-    @InjectMocks
+//    @InjectMocks
     private ShortenerServiceImpl shortenerService;
+
+    @BeforeEach
+    public void beforeEach() {
+        shortenerService = new ShortenerServiceImpl(urlHasher, shortenedRepository, "localhost:8080");
+    }
 
     @Test
     public void createShortUrl_throwsMalformedUrlException_whenMalformedUrl() {
@@ -43,24 +48,24 @@ public class ShortenerServiceTest {
     public void createShortUrl_ReturnsShortenedUrl() throws MalformedURLException {
         String fullUrl = "https://www.lemonde.fr/international/";
         URL url = new URL(fullUrl);
-        when(urlShortener.shortensUrl(url)).thenReturn("https://www.lemonde.fr/9b264132fc");
+        when(urlHasher.hashUrl(url)).thenReturn("9b264132fc");
 
         String actual = shortenerService.createShortUrl(fullUrl);
 
-        assertThat(actual).isEqualTo("https://www.lemonde.fr/9b264132fc");
+        assertThat(actual).isEqualTo("http://localhost:8080/9b264132fc");
 
         ArgumentCaptor<ShortenedUrl> captor = ArgumentCaptor.forClass(ShortenedUrl.class);
         verify(shortenedRepository, times(1)).save(captor.capture());
         ShortenedUrl captured = captor.getValue();
         assertThat(captured).isNotNull();
-        assertThat(captured.getShortUrl()).isEqualTo("https://www.lemonde.fr/9b264132fc");
-        assertThat(captured.getFullUrl()).isEqualTo("https://www.lemonde.fr/international/");
+        assertThat(captured.getHash()).isEqualTo("9b264132fc");
+        assertThat(captured.getOriginalUrl()).isEqualTo("https://www.lemonde.fr/international/");
     }
 
     @Test
     public void searchFullUrl_returnsEmptyOptional_whenUnknownUrl() {
         String shortUrl = "https://www.lemonde.fr/9b264132fc";
-        when(shortenedRepository.findByShortUrl(shortUrl)).thenReturn(Optional.empty());
+        when(shortenedRepository.findById(shortUrl)).thenReturn(Optional.empty());
 
         var actual = shortenerService.searchFullUrl(shortUrl);
 
@@ -71,7 +76,7 @@ public class ShortenerServiceTest {
     public void searchFullUrl_returnsOptionalWithFullUrl() {
         String shortUrl = "https://www.lemonde.fr/9b264132fc";
         var shortenedUrl = new ShortenedUrl(shortUrl, "https://www.lemonde.fr/international/");
-        when(shortenedRepository.findByShortUrl(shortUrl)).thenReturn(Optional.of(shortenedUrl));
+        when(shortenedRepository.findById(shortUrl)).thenReturn(Optional.of(shortenedUrl));
 
         var actual = shortenerService.searchFullUrl(shortUrl);
 

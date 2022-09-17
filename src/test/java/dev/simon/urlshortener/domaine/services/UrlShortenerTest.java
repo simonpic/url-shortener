@@ -13,33 +13,22 @@ public class UrlShortenerTest {
 
     private static final int SIZE = 10;
 
-    private UrlShortener urlShortener;
+    private UrlHasher urlHasher;
 
     @BeforeEach
     public void setup() {
-        urlShortener = new UrlShortener(SIZE);
+        urlHasher = new UrlHasher(SIZE);
     }
 
     @Test
-    public void shortensUrl_returnsShortUrl_sansPort() throws MalformedURLException {
+    public void hashUrl_returnsHash() throws MalformedURLException {
         String fullUrl = "https://www.lemonde.fr/international/";
         URL url = new URL(fullUrl);
 
-        String shortenedUrl = urlShortener.shortensUrl(url);
+        String shortenedUrl = urlHasher.hashUrl(url);
 
         String expectedHash = computeHash(fullUrl);
-        assertThat(shortenedUrl).isEqualTo("https://www.lemonde.fr/" + expectedHash);
-    }
-
-    @Test
-    public void shortensUrl_returnsShortUrl_withPort() throws MalformedURLException {
-        String fullUrl = "https://www.lemonde.fr:4567/international/";
-        URL url = new URL(fullUrl);
-
-        String shortenedUrl = urlShortener.shortensUrl(url);
-
-        String expectedHash = computeHash(fullUrl);
-        assertThat(shortenedUrl).isEqualTo("https://www.lemonde.fr:4567/" + expectedHash);
+        assertThat(shortenedUrl).isEqualTo(expectedHash);
     }
 
     private String computeHash(String url) {
