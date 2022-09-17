@@ -4,7 +4,7 @@ create_buildpack:
 	./mvnw spring-boot:build-image
 
 start_app:
-	docker-compose -f docker/stack.yml up
+	docker-compose -f docker/stack.yml up -d
 
 stop_app:
 	docker-compose -f docker/stack.yml down
