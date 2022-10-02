@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,12 +20,15 @@ public class ShortenerServiceImpl implements ShortenerService {
     private final UrlHasher urlHasher;
     private final ShortenedRepository shortenedRepository;
     private final String domain;
+    private final String redirecterDomain;
 
     public ShortenerServiceImpl(UrlHasher urlHasher, ShortenedRepository shortenedRepository,
-                                @Value("${url-shortener.domain}") String domain) {
+                                @Value("${url-shortener.domain}") String domain,
+                                @Value("${url-shortener.redirecter.domain}") String redirecterDomain) {
         this.urlHasher = urlHasher;
         this.shortenedRepository = shortenedRepository;
         this.domain = domain;
+        this.redirecterDomain = redirecterDomain;
     }
 
     @Override
@@ -37,7 +41,7 @@ public class ShortenerServiceImpl implements ShortenerService {
 
         shortenedRepository.save(shortenedUrl);
 
-        return String.format("http://%s/%s", domain, hash);
+        return String.format("http://%s/%s", redirecterDomain, hash);
     }
 
     @Override

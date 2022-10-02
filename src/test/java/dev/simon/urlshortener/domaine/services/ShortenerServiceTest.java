@@ -26,12 +26,12 @@ public class ShortenerServiceTest {
     @Mock
     private ShortenedRepository shortenedRepository;
 
-//    @InjectMocks
     private ShortenerServiceImpl shortenerService;
 
     @BeforeEach
     public void beforeEach() {
-        shortenerService = new ShortenerServiceImpl(urlHasher, shortenedRepository, "localhost:8080");
+        shortenerService = new ShortenerServiceImpl(urlHasher, shortenedRepository,
+                "localhost:8080", "localhost:8090");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ShortenerServiceTest {
 
         String actual = shortenerService.createShortUrl(fullUrl);
 
-        assertThat(actual).isEqualTo("http://localhost:8080/9b264132fc");
+        assertThat(actual).isEqualTo("http://localhost:8090/9b264132fc");
 
         ArgumentCaptor<ShortenedUrl> captor = ArgumentCaptor.forClass(ShortenedUrl.class);
         verify(shortenedRepository, times(1)).save(captor.capture());

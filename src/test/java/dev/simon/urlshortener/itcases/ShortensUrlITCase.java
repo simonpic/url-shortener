@@ -47,8 +47,6 @@ public class ShortensUrlITCase {
 
     @Test
     public void shortensUrl() throws Exception {
-        String fullUrl = "https://www.lemonde.fr/international/";
-
         String postBody = "{\"url\": \"https://www.lemonde.fr/international/\"}";
 
         LOGGER.info("--- Step 1 -> Send post request to shorten url\n{}", postBody);
@@ -61,16 +59,6 @@ public class ShortensUrlITCase {
                 .andReturn().getResponse().getContentAsString();
 
         LOGGER.info("\tResponse received\n{}", postResponseBody);
-
-        LOGGER.info("--- Step 2 -> Verify previously create URL is persisted and retrievable by the shortened URL");
-
-        PostURLResponse postURLResponse = objectMapper.readValue(postResponseBody, PostURLResponse.class);
-
-        LOGGER.info("Hashed URL {}", postURLResponse.getShortenedUrl());
-
-        mvc.perform(get(postURLResponse.getShortenedUrl()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "https://www.lemonde.fr/international/"));
     }
 
 }
